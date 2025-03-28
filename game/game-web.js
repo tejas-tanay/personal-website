@@ -299,11 +299,15 @@ const Game = {
     awaitingInput: false,
     inputCallback: null,
     isFullscreen: false,
+    cardDeck: [], // Store the current deck of cards
     
     // Initialize game
     init: function() {
         this.output.textContent = UI.splashScreen() + "\n\nWelcome to the Game of Digital Politics!\n\nPress Enter to start...";
         this.input.focus();
+        
+        // Initialize the card deck
+        this.shuffleDeck();
         
         this.input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
@@ -330,6 +334,29 @@ const Game = {
         
         this.awaitingInput = true;
         this.inputCallback = () => this.startGame();
+    },
+    
+    // Shuffle the deck of cards
+    shuffleDeck: function() {
+        // Create a new deck with all cards
+        this.cardDeck = [...eventCards];
+        
+        // Shuffle the deck using Fisher-Yates algorithm
+        for (let i = this.cardDeck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.cardDeck[i], this.cardDeck[j]] = [this.cardDeck[j], this.cardDeck[i]];
+        }
+    },
+    
+    // Draw a card from the deck
+    drawCard: function() {
+        // If deck is empty, reshuffle all cards
+        if (this.cardDeck.length === 0) {
+            this.shuffleDeck();
+        }
+        
+        // Draw the top card from the deck
+        return this.cardDeck.pop();
     },
     
     // Toggle fullscreen mode
@@ -513,12 +540,6 @@ const Game = {
         this.gameLoop();
     },
     
-    // Draw a random card
-    drawRandomCard: function() {
-        const index = Math.floor(Math.random() * eventCards.length);
-        return eventCards[index];
-    },
-    
     // Display choices
     displayChoices: function(choices) {
         this.choicesContainer.innerHTML = '';
@@ -604,6 +625,11 @@ const Game = {
     
     // Game loop
     gameLoop: async function() {
+        // Initialize the card deck at the start of the game
+        if (this.cardDeck.length === 0) {
+            this.shuffleDeck();
+        }
+        
         while (this.state.turn < this.state.totalTurns && !this.gameOver) {
             // Next turn
             this.state.turn++;
@@ -616,8 +642,8 @@ const Game = {
             this.print(UI.resourceDisplay(this.state.resources));
             this.print(`  Project Score: ${this.state.score}`);
             
-            // Draw a card
-            this.currentCard = this.drawRandomCard();
+            // Draw a card using the deck system
+            this.currentCard = this.drawCard();
             
             // Display card
             this.print(`\n┌─────────────────────── SITUATION ───────────────────────┐`);
