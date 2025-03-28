@@ -253,6 +253,33 @@ const UI = {
 ██╔═══╝ ██║   ██║██║     ██║   ██║   ██║██║     ╚════██║  
 ██║     ╚██████╔╝███████╗██║   ██║   ██║╚██████╗███████║  
 ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═╝   ╚═╝ ╚═════╝╚══════╝`;
+    },
+    
+    // Quick start guide display
+    quickStartGuide: function() {
+        return `
+┌─────────────────────── QUICK START GUIDE ───────────────────────┐
+│                                                                 │
+│  Welcome to the Game of Digital Politics!                       │
+│                                                                 │
+│  You are a project manager leading a critical government        │
+│  digital service project. Your goal is to successfully          │
+│  deliver the project while managing three key resources:        │
+│                                                                 │
+│  • STABILITY - Technical reliability of your system             │
+│  • TRUST - Your relationship with the Ministry                  │
+│  • CHAOS - The level of unpredictability in your project        │
+│                                                                 │
+│  Each turn, you'll face a situation requiring a decision.       │
+│  Your choices will affect your resources and Project Score.     │
+│                                                                 │
+│  At the end, your final score determines your success:          │
+│  FINAL SCORE = Project Score + Stability + Trust - Chaos        │
+│                                                                 │
+│  Type 'h' during any choice to see the help screen.             │
+│                                                                 │
+│  Good luck!                                                     │
+└─────────────────────────────────────────────────────────────────┘`;
     }
 };
 
@@ -317,6 +344,17 @@ const Game = {
     // Start the game
     startGame: async function() {
         this.clear();
+        
+        // Ask if the player wants quick start mode
+        this.print("Would you like to:");
+        this.print("[0] Quick Start - Jump straight into the game with minimal introduction");
+        this.print("[1] Full Experience - Read the complete backstory and game rules");
+        
+        // Get choice
+        const startChoice = await this.getInput("\nEnter your choice (0 or 1):");
+        const quickStart = startChoice === "0";
+        
+        this.clear();
         this.print("Please enter your name:");
         
         this.state.playerName = await this.getInput("");
@@ -326,11 +364,18 @@ const Game = {
         
         this.clear();
         
-        // Show introduction
-        const intro = gameContext.introduction.replace("%MINISTRY_NAME%", this.state.ministryName);
-        this.print(intro);
-        
-        await this.getInput("\nPress Enter to begin your journey...");
+        if (quickStart) {
+            // Show quick start guide
+            this.print(UI.quickStartGuide());
+            
+            await this.getInput("\nPress Enter to begin your journey...");
+        } else {
+            // Show introduction
+            const intro = gameContext.introduction.replace("%MINISTRY_NAME%", this.state.ministryName);
+            this.print(intro);
+            
+            await this.getInput("\nPress Enter to begin your journey...");
+        }
         
         // Start game loop
         this.gameLoop();
