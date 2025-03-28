@@ -329,6 +329,25 @@ const Game = {
         this.output.textContent = '';
     },
     
+    // Wrap text to fit within a specified width
+    wrapText: function(text, maxWidth = 58) {
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = '';
+        
+        words.forEach(word => {
+            if ((currentLine + word).length > maxWidth) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine += (currentLine ? ' ' : '') + word;
+            }
+        });
+        
+        if (currentLine) lines.push(currentLine);
+        return lines;
+    },
+    
     // Get input from player
     getInput: function(prompt) {
         return new Promise(resolve => {
@@ -339,6 +358,79 @@ const Game = {
                 resolve(value);
             };
         });
+    },
+    
+    // Show help screen
+    showHelpScreen: async function() {
+        this.print("\n" + "=".repeat(70));
+        this.print("HELP SCREEN");
+        this.print("=".repeat(70));
+        
+        this.print("\nRESOURCE GUIDE:");
+        this.print("• STABILITY - Technical reliability of your system");
+        this.print("  Higher stability means fewer crashes and better performance");
+        this.print("  Lower stability increases the risk of system failures and user complaints");
+        
+        this.print("\n• TRUST - Your relationship with the Ministry and stakeholders");
+        this.print("  Higher trust gives you more freedom and support from the Ministry");
+        this.print("  Lower trust means more scrutiny and micromanagement");
+        
+        this.print("\n• CHAOS - The level of unpredictability in your project");
+        this.print("  Higher chaos means unexpected challenges and emergencies");
+        this.print("  Lower chaos allows for better planning and execution");
+        
+        this.print("\nSCORE SYSTEM:");
+        this.print("• PROJECT SCORE - Accumulates from the long-term impact of your decisions");
+        this.print("• FINAL SCORE = Project Score + Stability + Trust - Chaos");
+        
+        await this.getInput("\nPress Enter to return to the game...");
+        
+        // Redisplay the current game state
+        this.displayGameState();
+    },
+    
+    // Display current game state - used after returning from help screen
+    displayGameState: function() {
+        if (!this.currentCard) return;
+        
+        this.print(`\n${this.state.turn}/${this.state.totalTurns} - PROJECT: ${this.state.projectName}`);
+        this.print(UI.resourceDisplay(this.state.resources));
+        this.print(`  Project Score: ${this.state.score}`);
+        
+        // Display card
+        this.print(`\n┌─────────────────────── SITUATION ───────────────────────┐`);
+        const descLines = this.wrapText(this.currentCard.description);
+        descLines.forEach(line => {
+            this.print(`│ ${line.padEnd(60)} │`);
+        });
+        
+        this.print(`├───────────────────── BACKGROUND ───────────────────────┤`);
+        const contextLines = this.wrapText(this.currentCard.context);
+        contextLines.forEach(line => {
+            this.print(`│ ${line.padEnd(60)} │`);
+        });
+        this.print(`└─────────────────────────────────────────────────────────┘`);
+        
+        // Display choices
+        this.print(`\n┌─────────────────────── OPTIONS ───────────────────────┐`);
+        this.currentCard.choices.forEach((choice, index) => {
+            this.print(`│                                                     │`);
+            this.print(`│ [${index}] ${choice.option}`);
+            
+            const descLines = this.wrapText(choice.description, 55);
+            descLines.forEach(line => {
+                this.print(`│   ${line.padEnd(56)} │`);
+            });
+            
+            if (index < this.currentCard.choices.length - 1) {
+                this.print(`├─────────────────────────────────────────────────────┤`);
+            }
+        });
+        this.print(`└─────────────────────────────────────────────────────────┘`);
+        this.print(`\nEnter the number of your choice (0-${this.currentCard.choices.length - 1}) or 'h' for help:`);
+        
+        // Show choice buttons
+        this.displayChoices(this.currentCard.choices);
     },
     
     // Start the game
@@ -402,6 +494,17 @@ const Game = {
             });
             this.choicesContainer.appendChild(button);
         });
+        
+        // Add help button
+        const helpButton = document.createElement('button');
+        helpButton.className = 'choice-button';
+        helpButton.textContent = '[h] Help';
+        helpButton.addEventListener('click', () => {
+            if (this.awaitingInput && this.inputCallback) {
+                this.inputCallback('h');
+            }
+        });
+        this.choicesContainer.appendChild(helpButton);
     },
     
     // Apply outcome of a choice
@@ -478,9 +581,16 @@ const Game = {
             
             // Display card
             this.print(`\n┌─────────────────────── SITUATION ───────────────────────┐`);
-            this.print(`│ ${this.currentCard.description.padEnd(60)} │`);
+            const descLines = this.wrapText(this.currentCard.description);
+            descLines.forEach(line => {
+                this.print(`│ ${line.padEnd(60)} │`);
+            });
+            
             this.print(`├───────────────────── BACKGROUND ───────────────────────┤`);
-            this.print(`│ ${this.currentCard.context.padEnd(60)} │`);
+            const contextLines = this.wrapText(this.currentCard.context);
+            contextLines.forEach(line => {
+                this.print(`│ ${line.padEnd(60)} │`);
+            });
             this.print(`└─────────────────────────────────────────────────────────┘`);
             
             // Display choices
@@ -488,7 +598,12 @@ const Game = {
             this.currentCard.choices.forEach((choice, index) => {
                 this.print(`│                                                     │`);
                 this.print(`│ [${index}] ${choice.option}`);
-                this.print(`│   ${choice.description}`);
+                
+                const descLines = this.wrapText(choice.description, 55);
+                descLines.forEach(line => {
+                    this.print(`│   ${line.padEnd(56)} │`);
+                });
+                
                 if (index < this.currentCard.choices.length - 1) {
                     this.print(`├─────────────────────────────────────────────────────┤`);
                 }
@@ -498,16 +613,39 @@ const Game = {
             // Show choice buttons
             this.displayChoices(this.currentCard.choices);
             
-            // Get player choice
-            const playerChoiceIndex = parseInt(await this.getInput("\nEnter the number of your choice:"));
-            const chosen = this.currentCard.choices[playerChoiceIndex];
+            // Get player choice with validation
+            let validChoice = false;
+            let playerChoiceIndex;
+            let chosen;
+            
+            while (!validChoice) {
+                const input = await this.getInput("\nEnter the number of your choice (0-" + (this.currentCard.choices.length - 1) + ") or 'h' for help:");
+                
+                if (input.toLowerCase() === 'h') {
+                    await this.showHelpScreen();
+                    continue;
+                }
+                
+                playerChoiceIndex = parseInt(input);
+                
+                if (isNaN(playerChoiceIndex) || playerChoiceIndex < 0 || playerChoiceIndex >= this.currentCard.choices.length) {
+                    this.print("Invalid choice. Please try again.");
+                    continue;
+                }
+                
+                validChoice = true;
+                chosen = this.currentCard.choices[playerChoiceIndex];
+            }
             
             // Apply outcome
             this.applyOutcome(chosen);
             
             // Display outcome
             this.print(`\n┌─────────────────────── OUTCOME ───────────────────────┐`);
-            this.print(`│ ${chosen.outcomeDescription.padEnd(58)} │`);
+            const outcomeLines = this.wrapText(chosen.outcomeDescription);
+            outcomeLines.forEach(line => {
+                this.print(`│ ${line.padEnd(58)} │`);
+            });
             this.print(`├─────────────────────── RESULTS ───────────────────────┤`);
             
             // Display immediate outcomes with arrow indicators
@@ -559,7 +697,10 @@ const Game = {
         
         // Display ending
         this.print("\n" + "=".repeat(70));
-        this.print(endingDescription);
+        const endingLines = this.wrapText(endingDescription, 68);
+        endingLines.forEach(line => {
+            this.print(line);
+        });
         this.print("=".repeat(70) + "\n");
         
         // Final score
