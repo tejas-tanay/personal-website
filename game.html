@@ -14,6 +14,21 @@
             background-color: #000;
             color: #0f0;
             border: 1px solid #0f0;
+            transition: all 0.3s ease;
+        }
+        
+        #game-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            max-width: none;
+            margin: 0;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow-y: auto;
         }
         
         #game-output {
@@ -24,6 +39,11 @@
             padding: 10px;
             background-color: #000;
             border: 1px solid #0f0;
+            transition: height 0.3s ease;
+        }
+        
+        #game-container.fullscreen #game-output {
+            height: calc(100vh - 200px);
         }
         
         #game-input {
@@ -53,6 +73,50 @@
         #choices-container {
             margin-top: 10px;
         }
+        
+        #game-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        #fullscreen-button {
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+        
+        #fullscreen-button:hover {
+            background-color: #0f0;
+            color: #000;
+        }
+        
+        .game-title {
+            margin: 0;
+            text-align: center;
+            color: #0f0;
+            font-size: 1.2em;
+        }
+        
+        /* Hide header and footer when in fullscreen */
+        body.game-fullscreen header, 
+        body.game-fullscreen footer, 
+        body.game-fullscreen main > *:not(#game) {
+            display: none;
+        }
+        
+        body.game-fullscreen main {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body.game-fullscreen #game {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +137,10 @@
             <p>A text-based strategy game where you manage resources and make decisions to succeed in a digital project.</p>
             
             <div id="game-container">
+                <div id="game-controls">
+                    <h3 class="game-title">Game of Digital Politics</h3>
+                    <button id="fullscreen-button">Toggle Fullscreen</button>
+                </div>
                 <div id="game-output"></div>
                 <div id="choices-container"></div>
                 <input type="text" id="game-input" placeholder="Type your command here..." autocomplete="off">

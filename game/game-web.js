@@ -289,6 +289,8 @@ const Game = {
     output: document.getElementById('game-output'),
     input: document.getElementById('game-input'),
     choicesContainer: document.getElementById('choices-container'),
+    gameContainer: document.getElementById('game-container'),
+    fullscreenButton: document.getElementById('fullscreen-button'),
     
     // Game state
     state: JSON.parse(JSON.stringify(gameState)),
@@ -296,6 +298,7 @@ const Game = {
     gameOver: false,
     awaitingInput: false,
     inputCallback: null,
+    isFullscreen: false,
     
     // Initialize game
     init: function() {
@@ -312,10 +315,42 @@ const Game = {
                     this.inputCallback(value);
                 }
             }
+            
+            // Add F key as fullscreen shortcut
+            if (e.key === 'f' && e.ctrlKey) {
+                e.preventDefault();
+                this.toggleFullscreen();
+            }
+        });
+        
+        // Set up fullscreen button
+        this.fullscreenButton.addEventListener('click', () => {
+            this.toggleFullscreen();
         });
         
         this.awaitingInput = true;
         this.inputCallback = () => this.startGame();
+    },
+    
+    // Toggle fullscreen mode
+    toggleFullscreen: function() {
+        this.isFullscreen = !this.isFullscreen;
+        
+        if (this.isFullscreen) {
+            this.gameContainer.classList.add('fullscreen');
+            document.body.classList.add('game-fullscreen');
+        } else {
+            this.gameContainer.classList.remove('fullscreen');
+            document.body.classList.remove('game-fullscreen');
+        }
+        
+        // Focus on input after toggling fullscreen
+        setTimeout(() => {
+            this.input.focus();
+        }, 100);
+        
+        // Scroll to ensure text is visible
+        this.output.scrollTop = this.output.scrollHeight;
     },
     
     // Print to game console
@@ -382,6 +417,11 @@ const Game = {
         this.print("\nSCORE SYSTEM:");
         this.print("• PROJECT SCORE - Accumulates from the long-term impact of your decisions");
         this.print("• FINAL SCORE = Project Score + Stability + Trust - Chaos");
+        
+        this.print("\nKEYBOARD SHORTCUTS:");
+        this.print("• Press 'h' anytime during a choice to show this help screen");
+        this.print("• Press 'Ctrl+F' to toggle fullscreen mode");
+        this.print("• Press '0-9' to quickly select options by their number");
         
         await this.getInput("\nPress Enter to return to the game...");
         
