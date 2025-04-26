@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Digital Politics - Tejas Tanay Sharma</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            transition: all 0.3s ease;
+        }
+        
+        #game-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            max-width: none;
+            margin: 0;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        
+        #game-output {
+            white-space: pre;
+            overflow-y: auto;
+            height: 400px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #000;
+            border: 1px solid #0f0;
+            transition: height 0.3s ease;
+        }
+        
+        #game-container.fullscreen #game-output {
+            height: calc(100vh - 200px);
+        }
+        
+        #game-input {
+            width: 100%;
+            padding: 8px;
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .choice-button {
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .choice-button:hover {
+            background-color: #0f0;
+            color: #000;
+        }
+        
+        #choices-container {
+            margin-top: 10px;
+        }
+        
+        #game-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        #fullscreen-button {
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+        
+        #fullscreen-button:hover {
+            background-color: #0f0;
+            color: #000;
+        }
+        
+        .game-title {
+            margin: 0;
+            text-align: center;
+            color: #0f0;
+            font-size: 1.2em;
+        }
+        
+        /* Hide header and footer when in fullscreen */
+        body.game-fullscreen header, 
+        body.game-fullscreen footer, 
+        body.game-fullscreen main > *:not(#game) {
+            display: none;
+        }
+        
+        body.game-fullscreen main {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body.game-fullscreen #game {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tejas Tanay Sharma</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="game.html" class="active">Game</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="game">
+            <h2>Game of Digital Politics</h2>
+            <p>A text-based strategy game where you manage resources and make decisions to succeed in a digital project.</p>
+            
+            <div id="game-container">
+                <div id="game-controls">
+                    <h3 class="game-title">Game of Digital Politics</h3>
+                    <button id="fullscreen-button">Toggle Fullscreen</button>
+                </div>
+                <div id="game-output"></div>
+                <div id="choices-container"></div>
+                <input type="text" id="game-input" placeholder="Type your command here..." autocomplete="off">
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Tejas Tanay Sharma. All rights reserved.</p>
+    </footer>
+    
+    <script src="game/game-web.js"></script>
+</body>
+</html> 
