@@ -1,0 +1,4 @@
+# Ignore Node modules and Eleventy build output
+node_modules/
+_site/
+.DS_Store 
