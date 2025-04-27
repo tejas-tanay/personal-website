@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { prompt } = require('inquirer');
+// We'll import inquirer dynamically within the async function for ESM compatibility
 const fs = require('fs');
 const slugify = require('slugify');
 const path = require('path');
@@ -9,6 +9,10 @@ const { execSync } = require('child_process');
 fs.mkdirSync('posts', { recursive: true });
 
 (async function() {
+  // Dynamically import inquirer for ES Module compatibility
+  const inquirerModule = await import('inquirer');
+  const inquirerLib = inquirerModule.default || inquirerModule;
+  const { prompt } = inquirerLib;
   const { title } = await prompt([
     { type: 'input', name: 'title', message: 'Post title:' }
   ]);
