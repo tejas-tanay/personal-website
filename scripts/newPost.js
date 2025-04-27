@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const inquirer = require('inquirer');
+const { prompt } = require('inquirer');
 const fs = require('fs');
 const slugify = require('slugify');
 const path = require('path');
@@ -9,7 +9,7 @@ const { execSync } = require('child_process');
 fs.mkdirSync('posts', { recursive: true });
 
 (async function() {
-  const { title } = await inquirer.prompt([
+  const { title } = await prompt([
     { type: 'input', name: 'title', message: 'Post title:' }
   ]);
 
