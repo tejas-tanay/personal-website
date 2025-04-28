@@ -4,13 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title }} | Personal Website</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <!-- Load Space Grotesk font -->
+  <link rel='preconnect' href='https://fonts.googleapis.com'>
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+  <link href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap' rel='stylesheet'>
+  <link rel='stylesheet' href='/styles.css' />
 </head>
-<body>
+<body class="fade-enter">
   <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/blog/">Blog</a>
+    <nav class='nav-container'>
+      <a class='nav-link{% if page.url == "/" %} active{% endif %}' href='/'>Home</a>
+      <a class='nav-link{% if page.url == "/blog/" %} active{% endif %}' href='/blog/'>Blog</a>
+      <a class='nav-link{% if page.url == "/projects/" %} active{% endif %}' href='/projects/'>Projects</a>
     </nav>
   </header>
   <main>
@@ -19,5 +24,10 @@
   <footer>
     <p>&copy; 2025</p>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('fade-enter-active');
+    });
+  </script>
 </body>
 </html> 

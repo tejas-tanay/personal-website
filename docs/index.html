@@ -4,26 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home | Personal Website</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <!-- Load Space Grotesk font -->
+  <link rel='preconnect' href='https://fonts.googleapis.com'>
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+  <link href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap' rel='stylesheet'>
+  <link rel='stylesheet' href='/styles.css' />
 </head>
-<body>
+<body class="fade-enter">
   <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/blog/">Blog</a>
+    <nav class='nav-container'>
+      <a class='nav-link active' href='/'>Home</a>
+      <a class='nav-link' href='/blog/'>Blog</a>
+      <a class='nav-link' href='/projects/'>Projects</a>
     </nav>
   </header>
   <main>
-    <h1>Welcome to My Personal Website</h1>
-<p>This is my portfolio and collection of projects and blog posts.</p>
-<ul>
-<li><a href="/game.html">Play the Game of Digital Politics</a></li>
-<li><a href="/blog/">Read the Blog</a></li>
-</ul>
-
+    <section class="hero">
+  <h1>Hi, I'm [Your Name].</h1>
+  <p class="intro">A concise introduction that highlights your professional focus and interests in a single, impactful sentence.</p>
+  <div class="hero-buttons">
+    <a class="button-outline" href="/blog/">Blog</a>
+    <a class="button-outline" href="/projects/">Projects</a>
+    <a class="button-outline" href="https://github.com/your-username" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section> 
   </main>
   <footer>
     <p>&copy; 2025</p>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('fade-enter-active');
+    });
+  </script>
 </body>
 </html> 

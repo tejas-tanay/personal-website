@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+title: "Projects"
+---
+<section>
+  <h1>Projects</h1>
+  <div class="grid-container projects-grid">
+    {% for project in collections.projects %}
+      <article class="card">
+        <h2>{{ project.data.title }}</h2>
+        <p>{{ project.data.description }}</p>
+        <div class="project-links">
+          {% if project.data.repoUrl %}
+            <a class="button-outline" href="{{ project.data.repoUrl }}" target="_blank" rel="noopener">GitHub</a>
+          {% endif %}
+          {% if project.data.demoUrl %}
+            <a class="button-outline" href="{{ project.data.demoUrl }}" target="_blank" rel="noopener">Live Demo</a>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section> 
