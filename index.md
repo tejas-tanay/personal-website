@@ -3,8 +3,8 @@ layout: layouts/base.njk
 title: "Home"
 ---
 <section class="hero">
-  <h1>Hi, I'm [Your Name].</h1>
-  <p class="intro">A concise introduction that highlights your professional focus and interests in a single, impactful sentence.</p>
+  <h1>Hi, I'm Tejas.</h1>
+  <p class="intro">I build tools, games, and experiments at the intersection of technology and creativity.</p>
   <div class="hero-buttons">
     <a class="button-outline" href="/blog/">Blog</a>
     <a class="button-outline" href="/projects/">Projects</a>

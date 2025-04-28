@@ -182,13 +182,20 @@ nav.nav-container .icon-link:hover {
 .hero {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 1.5rem;
   margin: 4rem 0;
 }
 .hero .intro {
   font-size: 1.2rem;
   max-width: 600px;
+}
+
+/* Larger headline in hero */
+.hero h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
 }
 
 /* Footer */
