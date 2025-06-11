@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update
+
+media_folder: "assets/images/uploads" # Media files will be stored in this directory
+public_folder: "/assets/images/uploads" # The src attribute for uploaded media will begin with this path
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/post.njk" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Summary", name: "summary", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" } 
