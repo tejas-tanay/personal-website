@@ -9,7 +9,7 @@ title: "Blog"
     <a class="card" href="{{ post.url }}">
       <h2>{{ post.data.title }}</h2>
       <p>{{ post.data.summary }}</p>
-      <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %d, %Y' }}</time>
+      <time datetime="{{ post.date | date('YYYY-MM-DD') }}">{{ post.date | date('MMMM DD, YYYY') }}</time>
     </a>
   {% endfor %}
 </div> 
