@@ -1,11 +1,12 @@
-/* Root variables for Light Minimalist Theme */
+/* Root variables for Magazine Style Theme */
 :root {
-  --primary-color: #007AFF;         /* A classic, clean blue */
-  --text-color: #333333;           /* Dark gray for readability */
-  --bg-color: #FFFFFF;             /* Pure white background */
-  --secondary-bg-color: #F8F8F8;   /* Slight off-white for cards */
-  --border-color: #DDDDDD;         /* Light gray for borders */
-  --font-family: 'Inter', sans-serif;
+  --primary-color: #2C3E50;         /* Dark blue-gray for text */
+  --accent-color: #E74C3C;          /* A deep red for accents */
+  --bg-color: #FFFFFF;              /* White background */
+  --secondary-bg-color: #F4F4F4;    /* Light gray for cards */
+  --border-color: #DDDDDD;          /* Light gray for borders */
+  --font-serif: 'Merriweather', serif;
+  --font-sans: 'Lato', sans-serif;
   --transition-fast: 0.2s ease-in-out;
 }
 
@@ -21,25 +22,25 @@ html, body {
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: var(--font-sans);
   background-color: var(--bg-color);
-  color: var(--text-color);
+  color: var(--primary-color);
   line-height: 1.6;
   padding: 0 1rem;
 }
 
 /* Main content container */
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem 0;
 }
 
 /* Header & Navigation */
 header {
-  padding: 1.5rem 0;
+  padding: 2rem 0;
   border-bottom: 1px solid var(--border-color);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 nav.nav-container {
@@ -49,40 +50,42 @@ nav.nav-container {
 }
 
 .nav-logo a {
+  font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 1.2rem;
-  color: var(--text-color);
+  font-size: 1.5rem;
+  color: var(--primary-color);
   text-decoration: none;
 }
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .nav-links .nav-link {
-  color: var(--text-color);
+  color: var(--primary-color);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .nav-links .nav-link:hover,
 .nav-links .nav-link.active {
-  color: var(--primary-color);
+  color: var(--accent-color);
 }
 
 /* Typography */
 h1, h2, h3, h4, h5 {
-  color: var(--text-color);
+  font-family: var(--font-serif);
+  color: var(--primary-color);
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-p { margin-bottom: 1rem; }
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+p { margin-bottom: 1.5rem; }
 a {
-  color: var(--primary-color);
+  color: var(--accent-color);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
@@ -93,29 +96,29 @@ a:hover {
 /* Grid & Cards */
 .grid-container {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .card {
   background: var(--secondary-bg-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 2rem;
   transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--primary-color);
   display: block;
 }
 
 .card:hover {
-  border-color: var(--primary-color);
+  border-color: var(--accent-color);
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .card h2 {
-  font-size: 1.25rem;
-  color: var(--primary-color);
+  font-size: 1.5rem;
+  color: var(--accent-color);
 }
 .card time {
     font-size: 0.9rem;
@@ -126,9 +129,9 @@ a:hover {
 .button-outline {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  color: var(--primary-color);
+  color: var(--accent-color);
   background: transparent;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--accent-color);
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
@@ -136,7 +139,7 @@ a:hover {
 }
 
 .button-outline:hover {
-  background: var(--primary-color);
+  background: var(--accent-color);
   color: var(--bg-color);
   text-decoration: none;
 }
@@ -144,25 +147,25 @@ a:hover {
 /* Hero Section */
 .hero {
   text-align: center;
-  padding: 4rem 0;
+  padding: 5rem 0;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .hero .intro {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto 2rem auto;
+  font-size: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto;
   color: #555;
 }
 
 .hero-buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 /* Footer */
@@ -177,8 +180,8 @@ footer {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  h1 { font-size: 2rem; }
-  .hero h1 { font-size: 2.5rem; }
+  h1 { font-size: 2.5rem; }
+  .hero h1 { font-size: 3rem; }
   nav.nav-container {
     flex-direction: column;
     gap: 1rem;
