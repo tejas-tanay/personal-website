@@ -8,6 +8,21 @@ module.exports = function(eleventyConfig) {
   // Get the current year for the footer
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
+  // Add date filter
+  eleventyConfig.addFilter("date", (dateObj, format) => {
+    const date = new Date(dateObj);
+    if (format === 'YYYY-MM-DD') {
+      return date.toISOString().split('T')[0];
+    } else if (format === 'MMMM DD, YYYY') {
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    }
+    return date.toDateString();
+  });
+
   // Create a "posts" collection from Markdown files in the posts folder
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md").sort((a, b) => {
