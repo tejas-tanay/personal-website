@@ -1,47 +1,49 @@
 module.exports = function(eleventyConfig) {
-  // Copy static assets and game folder
+  // Copy essentials
   eleventyConfig.addPassthroughCopy("styles.css");
-  eleventyConfig.addPassthroughCopy("game/");
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("admin");
 
-  // Get the current year for the footer
+  // Utilities
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
-  // Add date filter
+  const pad = n => n.toString().padStart(2, "0");
   eleventyConfig.addFilter("date", (dateObj, format) => {
     const date = new Date(dateObj);
-    if (format === 'YYYY-MM-DD') {
-      return date.toISOString().split('T')[0];
-    } else if (format === 'MMMM DD, YYYY') {
-      return date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      });
+    if (format === "YYYY-MM-DD") {
+      return `${date.getUTCFullYear()}-${pad(date.getUTCMonth()+1)}-${pad(date.getUTCDate())}`;
+    }
+    if (format === "MMMM DD, YYYY") {
+      return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    }
+    if (format === "ddd, DD MMM YYYY HH:mm:ss ZZ") {
+      return date.toUTCString();
     }
     return date.toDateString();
   });
 
-  // Create a "posts" collection from Markdown files in the posts folder
-  eleventyConfig.addCollection("posts", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("posts/*.md").sort((a, b) => {
-      return b.date - a.date;
-    });
-  });
+  // Posts collection
+  eleventyConfig.addCollection("posts", collection =>
+    collection.getFilteredByGlob("posts/**/*.md").sort((a, b) => b.date - a.date)
+  );
 
-  // Create a "projects" collection from Markdown files in the projects folder
-  eleventyConfig.addCollection("projects", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("projects/*.md");
+  // Computed permalink: /YYYY/mm/dd/slug/
+  eleventyConfig.addGlobalData("eleventyComputed", {
+    permalink: data => {
+      if (data.page && data.page.inputPath && data.page.inputPath.startsWith("./posts/")) {
+        const d = new Date(data.date);
+        const yyyy = d.getUTCFullYear();
+        const mm = pad(d.getUTCMonth() + 1);
+        const dd = pad(d.getUTCDate());
+        const slug = data.page.fileSlug.replace(/^posts\//, "");
+        return `/${yyyy}/${mm}/${dd}/${slug}/`;
+      }
+      return data.permalink;
+    }
   });
 
   return {
-    dir: {
-      input: ".",
-      includes: "_includes",
-      data: "_data",
-      output: "docs"
-    },
+    dir: { input: ".", includes: "_includes", data: "_data", output: "docs" },
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
     templateFormats: ["html", "njk", "md"]

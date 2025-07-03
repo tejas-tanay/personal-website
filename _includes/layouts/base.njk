@@ -1,47 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ title }} | Tejas Tanay</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css" />
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta charset="utf-8">
+  <title>{% if title %}{{ title }} | Tejas Tanay{% else %}Tejas Tanay{% endif %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if description or summary %}<meta name="description" content="{{ description or summary }}">{% endif %}
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <nav class='nav-container'>
-        <div class="nav-logo">
-          <a href="/">Tejas</a>
-        </div>
-        <div class="nav-links">
-          <a class='nav-link{% if page.url == "/" %} active{% endif %}' href='/'>Home</a>
-          <a class='nav-link{% if page.url == "/blog/" %} active{% endif %}' href='/blog/'>Blog</a>
-          <a class='nav-link{% if page.url == "/projects/" %} active{% endif %}' href='/projects/'>Projects</a>
-          <a class='nav-link' href='https://github.com/tejas-tanay' target='_blank' rel='noopener'>GitHub</a>
-        </div>
-      </nav>
-    </header>
-    <main>
-      {{ content | safe }}
-    </main>
-    <footer>
-      <p>&copy; {% year %} Tejas Tanay. All rights reserved.</p>
-    </footer>
-  </div>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
+  <header>
+    <nav>
+      Tejas Tanay | <a href="/blog/">Blog</a> | <a href="https://linkedin.com/in/tejas-tanay" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://instagram.com/tejas.tanay" target="_blank" rel="noopener">Instagram</a> · <a href="https://twitter.com/tejas_tanay" target="_blank" rel="noopener">Twitter</a> <!-- · <a href="https://github.com/tejas-tanay" target="_blank" rel="noopener">GitHub</a> -->
+    </nav>
+  </header>
+  <main>
+    {{ content | safe }}
+  </main>
+  <footer>&copy; {% year %} Tejas Tanay</footer>
 </body>
 </html> 

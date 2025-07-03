@@ -1,20 +1,32 @@
-# Personal Website
+# Minimalist Blog – tejastanaysharma.com
 
-This is my personal website, featuring my projects and blog.
+This repo contains the source for my writing-centric site, built with [Eleventy](https://11ty.dev/).
 
-## Structure
-- `index.html`: Main page
-- `styles.css`: Styling
-- `game/`: Contains the Game of Digital Politics
+## Local development
+```bash
+npm install
+npm run serve
+# Eleventy prints the exact URL, e.g. http://localhost:8080/ or 8081 if 8080 is taken.
+```
+Site is built to the `docs/` folder for easy GitHub Pages deployment.
 
-## Local Development
-1. Clone this repository
-2. Open `index.html` in your browser
+## Adding a new post
+1. Create a markdown file in `posts/`, e.g. `posts/my-new-idea.md`.
+2. Add front-matter:
+   ```md
+   ---
+   title: "My New Idea"
+   date: "2025-05-01"
+   summary: "Optional – appears in RSS readers."
+   layout: layouts/post.njk
+   ---
+   ```
+3. Write your post in Markdown below the front-matter.
 
-## Game
-The Game of Digital Politics is a text-based strategy game where players manage resources and make decisions to succeed in a digital project.
+During the build Eleventy automatically places it at `/YYYY/mm/dd/slug/` and wires up **previous/next** links.
 
-To run the game:
-1. Ensure Node.js is installed
-2. Navigate to the `game` directory
-3. Run `node game.js`
+## RSS
+An RSS feed is generated at `/rss.xml`.
+
+## Toggling the GitHub link in the header
+The GitHub anchor is already present in `_includes/layouts/base.njk` but wrapped in an HTML comment. Simply delete the `<!--` & `-->` to show it.

@@ -1,0 +1,20 @@
+---
+permalink: "/rss.xml"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Tejas Tanay Blog</title>
+    <link>https://tejastanaysharma.com</link>
+    <description>Writing by Tejas Tanay</description>
+    {% for post in collections.posts %}
+    <item>
+      <title>{{ post.data.title }}</title>
+      <link>https://tejastanaysharma.com{{ post.url }}</link>
+      <pubDate>{{ post.date | date('ddd, DD MMM YYYY HH:mm:ss ZZ') }}</pubDate>
+      <description><![CDATA[{{ post.templateContent | safe }}]]></description>
+    </item>
+    {% endfor %}
+  </channel>
+</rss> 

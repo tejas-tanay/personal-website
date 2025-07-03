@@ -1,16 +1,14 @@
 ---
-title: "My First Post"
-date: "2023-10-26"
-summary: "This is a short summary of my first post, which will appear on the blog listing page."
+layout: layouts/base.njk
 ---
-
-# {{ title }}
-
-This is the main content of your blog post. You can write in Markdown here.
-
-It's easy to create headings, lists, and links.
-
-- Item 1
-- Item 2
-
-Enjoy writing! 
+<h1>{{ title }}</h1>
+<time datetime="{{ date | date('YYYY-MM-DD') }}">{{ date | date('MMMM DD, YYYY') }}</time>
+<article>
+  {{ content | safe }}
+</article>
+<nav>
+  <p>
+    {% if page.previous %}← <a href="{{ page.previous.url }}">{{ page.previous.data.title }}</a>{% endif %}
+    {% if page.next %}{% if page.previous %} · {% endif %}<a href="{{ page.next.url }}">{{ page.next.data.title }}</a> →{% endif %}
+  </p>
+</nav> 

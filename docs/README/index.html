@@ -1,21 +1,26 @@
-<h1>Personal Website</h1>
-<p>This is my personal website, featuring my projects and blog.</p>
-<h2>Structure</h2>
-<ul>
-<li><code>index.html</code>: Main page</li>
-<li><code>styles.css</code>: Styling</li>
-<li><code>game/</code>: Contains the Game of Digital Politics</li>
-</ul>
-<h2>Local Development</h2>
+<h1>Minimalist Blog – tejastanaysharma.com</h1>
+<p>This repo contains the source for my writing-centric site, built with <a href="https://11ty.dev/">Eleventy</a>.</p>
+<h2>Local development</h2>
+<pre><code class="language-bash">npm install
+npm run serve
+# Eleventy prints the exact URL, e.g. http://localhost:8080/ or 8081 if 8080 is taken.
+</code></pre>
+<p>Site is built to the <code>docs/</code> folder for easy GitHub Pages deployment.</p>
+<h2>Adding a new post</h2>
 <ol>
-<li>Clone this repository</li>
-<li>Open <code>index.html</code> in your browser</li>
+<li>Create a markdown file in <code>posts/</code>, e.g. <code>posts/my-new-idea.md</code>.</li>
+<li>Add front-matter:<pre><code class="language-md">---
+title: &quot;My New Idea&quot;
+date: &quot;2025-05-01&quot;
+summary: &quot;Optional – appears in RSS readers.&quot;
+layout: layouts/post.njk
+---
+</code></pre>
+</li>
+<li>Write your post in Markdown below the front-matter.</li>
 </ol>
-<h2>Game</h2>
-<p>The Game of Digital Politics is a text-based strategy game where players manage resources and make decisions to succeed in a digital project.</p>
-<p>To run the game:</p>
-<ol>
-<li>Ensure Node.js is installed</li>
-<li>Navigate to the <code>game</code> directory</li>
-<li>Run <code>node game.js</code></li>
-</ol>
+<p>During the build Eleventy automatically places it at <code>/YYYY/mm/dd/slug/</code> and wires up <strong>previous/next</strong> links.</p>
+<h2>RSS</h2>
+<p>An RSS feed is generated at <code>/rss.xml</code>.</p>
+<h2>Toggling the GitHub link in the header</h2>
+<p>The GitHub anchor is already present in <code>_includes/layouts/base.njk</code> but wrapped in an HTML comment. Simply delete the <code>&lt;!--</code> &amp; <code>--&gt;</code> to show it.</p>
