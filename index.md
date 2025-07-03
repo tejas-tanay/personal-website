@@ -3,9 +3,9 @@ layout: layouts/base.njk
 title: "Home"
 ---
 <h1>Tejas Tanay Sharma</h1>
-<p>I build digital public-service software and write about incentives, cities, and emerging markets.</p>
+<p>I build public-service software and write about incentives, cities, and emergent power games.</p>
 
-<p>Based in Dubai and forged in India's civic-tech scene, I'm currently pivoting a SaaS experiment while exploring how policy shapes technology. My writing blends tech policy, current-affairs analysis, and long-view history—published here to test ideas in public and invite critique.</p>
+<p>Based in Dubai after cutting my teeth on Indian GovTech, I'm pivoting our family firm toward SaaS while unpacking the politics of code, capital, and culture.</p>
 
 <h2>Recent essays</h2>
 <ul>
