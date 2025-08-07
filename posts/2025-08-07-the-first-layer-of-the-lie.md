@@ -1,7 +1,7 @@
 ---
 layout: layouts/post.njk
 title: The First Layer of the Lie
-date: 2025-01-06T16:23:00.000+05:30
+date: 2025-08-01T16:26:00.000+05:30
 summary: 1/x
 ---
 Let’s begin with the foundational claim of non-dual spirituality: "You are not the body. You are not the mind. You are pure consciousness."
