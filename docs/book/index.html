@@ -18,6 +18,7 @@
 <p>Select a time that works for you. Times are shown in your time zone.</p>
 
 <div id="cal-inline" style="width: 100%; min-height: 780px;"></div>
+<link rel="stylesheet" href="https://app.cal.com/embed/embed.css">
 <script>
   window.__CAL_LINK__ = "tejas-sharma";
 </script>
@@ -40,6 +41,18 @@
     };
     document.head.appendChild(script);
   })();
+  // Fallback: if the embed doesn't load, show a direct link
+  setTimeout(function() {
+    var container = document.getElementById('cal-inline');
+    if (container && !container.querySelector('iframe')) {
+      var link = document.createElement('p');
+      var a = document.createElement('a');
+      a.href = 'https://cal.com/' + (window.__CAL_LINK__ || 'calcom/bailey');
+      a.textContent = 'Open booking page →';
+      link.appendChild(a);
+      container.appendChild(link);
+    }
+  }, 3000);
   window.addEventListener('message', function(e) {
     if (e.data && e.data.type === 'cal:trigger' && e.data.payload && e.data.payload.event === 'bookingSuccessful') {
       console.log('Booking confirmed:', e.data.payload);
