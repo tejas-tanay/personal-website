@@ -14,6 +14,8 @@ title: "Home"
 {% endfor %}
 </ul>
 
+<p><a class="button" href="/book/">Book time →</a></p>
+
 <p><a href="https://linkedin.com/in/tejas-tanay-sharma">LinkedIn</a> · <a href="https://twitter.com/tejas_tanay">Twitter</a> · <a href="https://instagram.com/tejastanaysharma">Instagram</a> · <a href="mailto:me@tejastanaysharma.com">Email</a> <!-- · <a href="https://github.com/tejas-tanay">GitHub</a> --></p>
 
 <footer>&copy; 2025 Tejas Tanay Sharma — thoughts are my own.</footer> 

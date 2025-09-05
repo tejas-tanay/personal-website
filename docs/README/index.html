@@ -24,3 +24,16 @@ layout: layouts/post.njk
 <p>An RSS feed is generated at <code>/rss.xml</code>.</p>
 <h2>Toggling the GitHub link in the header</h2>
 <p>The GitHub anchor is already present in <code>_includes/layouts/base.njk</code> but wrapped in an HTML comment. Simply delete the <code>&lt;!--</code> &amp; <code>--&gt;</code> to show it.</p>
+<h2>Booking calendar</h2>
+<p>The site includes a minimal booking page at <code>/book/</code> using an inline Cal.com embed.</p>
+<p>Setup:</p>
+<ol>
+<li>Create or sign in to Cal.com and configure your availability, event types, and connected calendars for conflict checks and time zones.</li>
+<li>Set your Cal.com handle in <code>_data/site.json</code> under <code>calLink</code> (e.g., <code>&quot;tejastanay&quot;</code> or <code>&quot;team/handle&quot;</code>).</li>
+<li>Deploy. Visitors can view availability (month view), select a slot, enter details, and confirm. Cal.com handles time zones automatically.</li>
+</ol>
+<p>Managing bookings:</p>
+<ul>
+<li>Use your Cal.com dashboard to view, edit, or cancel bookings.</li>
+<li>Block out personal busy times by connecting your primary calendar or by setting time-off in Cal.com.</li>
+</ul>

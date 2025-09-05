@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Book a meeting | Tejas Tanay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Schedule time with Tejas.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      Tejas Tanay | <a href="/blog/">Blog</a> | <a href="/book/">Book</a> | <a href="https://linkedin.com/in/tejas-tanay-sharma" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://instagram.com/tejastanaysharma" target="_blank" rel="noopener">Instagram</a> · <a href="https://twitter.com/tejas_tanay" target="_blank" rel="noopener">Twitter</a> <!-- · <a href="https://github.com/tejas-tanay" target="_blank" rel="noopener">GitHub</a> -->
+    </nav>
+  </header>
+  <main>
+    <h1>Book a meeting</h1>
+<p>Select a time that works for you. Times are shown in your time zone.</p>
+
+<div id="cal-inline" style="width: 100%; min-height: 780px;"></div>
+<script>
+  window.__CAL_LINK__ = "tejas-sharma";
+</script>
+<script>
+  (function() {
+    var script = document.createElement('script');
+    script.src = 'https://app.cal.com/embed/embed.js';
+    script.async = true;
+    script.onload = function() {
+      if (window.Cal) {
+        window.Cal('init', { origin: 'https://app.cal.com' });
+        var calLink = window.__CAL_LINK__ || 'calcom/bailey';
+        window.Cal('inline', {
+          elementOrSelector: '#cal-inline',
+          calLink: calLink,
+          layout: 'month_view'
+        });
+        window.Cal('ui', { theme: 'auto', hideEventTypeDetails: false });
+      }
+    };
+    document.head.appendChild(script);
+  })();
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'cal:trigger' && e.data.payload && e.data.payload.event === 'bookingSuccessful') {
+      console.log('Booking confirmed:', e.data.payload);
+    }
+  });
+</script>
+
+
+  </main>
+  <footer>&copy; 2025 Tejas Tanay</footer>
+</body>
+</html> 

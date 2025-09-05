@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+title: "Book a meeting"
+description: "Schedule time with Tejas."
+---
+<h1>Book a meeting</h1>
+<p>Select a time that works for you. Times are shown in your time zone.</p>
+
+<div id="cal-inline" style="width: 100%; min-height: 780px;"></div>
+<script>
+  window.__CAL_LINK__ = "{{ site.calLink | default('calcom/bailey') }}";
+</script>
+<script>
+  (function() {
+    var script = document.createElement('script');
+    script.src = 'https://app.cal.com/embed/embed.js';
+    script.async = true;
+    script.onload = function() {
+      if (window.Cal) {
+        window.Cal('init', { origin: 'https://app.cal.com' });
+        var calLink = window.__CAL_LINK__ || 'calcom/bailey';
+        window.Cal('inline', {
+          elementOrSelector: '#cal-inline',
+          calLink: calLink,
+          layout: 'month_view'
+        });
+        window.Cal('ui', { theme: 'auto', hideEventTypeDetails: false });
+      }
+    };
+    document.head.appendChild(script);
+  })();
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'cal:trigger' && e.data.payload && e.data.payload.event === 'bookingSuccessful') {
+      console.log('Booking confirmed:', e.data.payload);
+    }
+  });
+</script>
+

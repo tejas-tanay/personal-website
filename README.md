@@ -30,3 +30,16 @@ An RSS feed is generated at `/rss.xml`.
 
 ## Toggling the GitHub link in the header
 The GitHub anchor is already present in `_includes/layouts/base.njk` but wrapped in an HTML comment. Simply delete the `<!--` & `-->` to show it.
+
+## Booking calendar
+
+The site includes a minimal booking page at `/book/` using an inline Cal.com embed.
+
+Setup:
+1. Create or sign in to Cal.com and configure your availability, event types, and connected calendars for conflict checks and time zones.
+2. Set your Cal.com handle in `_data/site.json` under `calLink` (e.g., `"tejastanay"` or `"team/handle"`).
+3. Deploy. Visitors can view availability (month view), select a slot, enter details, and confirm. Cal.com handles time zones automatically.
+
+Managing bookings:
+- Use your Cal.com dashboard to view, edit, or cancel bookings.
+- Block out personal busy times by connecting your primary calendar or by setting time-off in Cal.com.
